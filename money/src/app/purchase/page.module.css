@@ -1,0 +1,172 @@
+.time1 {
+  position: absolute;
+  width: 26.81%;
+  top: 33.96%;
+  left: 36.96%;
+  line-height: 22px;
+  font-weight: 600;
+  display: inline-block;
+}
+.time {
+  width: 138px;
+  position: relative;
+  height: 54px;
+}
+.border {
+  position: absolute;
+  height: 100%;
+  top: 0%;
+  bottom: 0%;
+  left: calc(50% - 13.65px);
+  border-radius: 4.3px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  width: 25px;
+  opacity: 0.35;
+  mix-blend-mode: normal;
+}
+.capIcon {
+  position: absolute;
+  height: 31.54%;
+  top: 36.78%;
+  bottom: 31.68%;
+  left: calc(50% + 12.35px);
+  max-height: 100%;
+  width: 1.3px;
+  opacity: 0.4;
+  mix-blend-mode: normal;
+}
+.capacity {
+  position: absolute;
+  height: 69.23%;
+  top: 15.38%;
+  bottom: 15.38%;
+  left: calc(50% - 11.65px);
+  border-radius: 2.5px;
+  background-color: #fff;
+  width: 21px;
+}
+.battery {
+  position: absolute;
+  height: 24.07%;
+  top: 42.59%;
+  bottom: 33.33%;
+  left: calc(50% + 11.5px);
+  width: 27.3px;
+}
+.wifiIcon {
+  position: absolute;
+  height: 22.78%;
+  top: 43.77%;
+  bottom: 33.45%;
+  left: calc(50% - 12.8px);
+  max-height: 100%;
+  width: 17.1px;
+}
+.cellularConnectionIcon {
+  position: absolute;
+  height: 22.59%;
+  top: 43.58%;
+  bottom: 33.82%;
+  left: calc(50% - 39.5px);
+  max-height: 100%;
+  width: 19.2px;
+}
+.levels {
+  width: 143px;
+  position: relative;
+  height: 54px;
+}
+.statusBar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 393px;
+  height: 54px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 112px;
+}
+.coinIcon {
+  width: 32px;
+  position: relative;
+  height: 32px;
+  object-fit: cover;
+}
+.coinParent {
+  position: absolute;
+  top: 74px;
+  left: 191px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.white_carIcon {
+  position: absolute;
+  top: 255px;
+  left: calc(50% - 159.5px);
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+}
+.iphone1415Pro1Child {
+  position: absolute;
+  top: 673px;
+  left: 37px;
+  background-color: #fff;
+  width: 320px;
+  height: 60px;
+}
+.swipeToPurchase {
+  position: absolute;
+  top: 641px;
+  left: 127px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 100;
+}
+.groupChild {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #6f6f6f;
+  width: 80px;
+  height: 60px;
+}
+.b {
+  position: absolute;
+  top: 19px;
+  left: 24px;
+  line-height: 22px;
+}
+.rectangleParent {
+  position: absolute;
+  top: 673px;
+  left: 37px;
+  width: 80px;
+  height: 60px;
+  font-size: 20px;
+}
+.coinIcon1 {
+  position: absolute;
+  top: 687px;
+  left: 221px;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+}
+.iphone1415Pro1 {
+  width: 100%;
+  position: relative;
+  background-color: #000;
+  height: 852px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 17px;
+  color: #fff;
+  font-family: "SF Pro";
+}
