@@ -1,58 +1,50 @@
-import React from "react";
+"use client";
 
-export default function LoginPage() {
+import React, { useState } from "react";
+import styles from "./page.module.css";
+
+const LoginPage = () => {
+  // 상태 초기값을 명확히 설정
+  const [nickname, setNickname] = useState<string>(""); // 닉네임 입력 값, 초기값은 빈 문자열
+  const isValid = nickname?.length >= 2; // undefined 방지: 닉네임 길이 확인
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value || ""); // 입력값이 없을 경우 빈 문자열로 설정
+  };
+
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>
-      <h1>로그인</h1>
-      <form>
-        <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>
-            이메일
-          </label>
+    <div className={styles.loginContainer}>
+      <div className={styles.loginBox}>
+        <h1 className={styles.loginTitle}>Welcome</h1>
+        <p className={styles.notice}>
+          Your nickname will be public. Avoid using your real name.
+        </p>
+        <form className={styles.loginForm}>
           <input
-            type="email"
-            id="email"
-            style={{
-              width: "100%",
-              padding: "10px",
-              fontSize: "16px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
+            type="text"
+            placeholder="Nickname"
+            className={`${styles.loginInput} ${
+              !isValid && nickname ? styles.invalidInput : ""
+            }`}
+            value={nickname}
+            onChange={handleChange}
           />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>
-            비밀번호
-          </label>
-          <input
-            type="password"
-            id="password"
-            style={{
-              width: "100%",
-              padding: "10px",
-              fontSize: "16px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-          />
-        </div>
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            fontSize: "16px",
-            backgroundColor: "#0070f3",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          로그인
-        </button>
-      </form>
+          {!isValid && nickname && (
+            <p className={styles.errorMessage}>
+              Nickname must be at least 2 characters long.
+            </p>
+          )}
+          <button
+            type="submit"
+            className={styles.loginButton}
+            disabled={!isValid}
+          >
+            Start
+          </button>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default LoginPage;
