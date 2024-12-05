@@ -1,95 +1,133 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get stavbbvrted by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [referralCode, setReferralCode] = useState("");
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 페이지 리로드 방지
+    if (username.trim() === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
+    console.log("로그인 성공:", { username, referralCode });
+    router.push(`/purchase?username=${encodeURIComponent(username)}`);
+  };
+
+  return (
+    <div
+      style={{
+        maxWidth: "100%",
+        margin: "0 auto",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#1a1a1a",
+        color: "#fff",
+        padding: "20px",
+        boxSizing: "border-box",
+      }}
+    >
+      <h1 style={{ fontSize: "1.8rem", marginBottom: "30px" }}>로그인</h1>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          width: "100%",
+          maxWidth: "360px",
+          backgroundColor: "#2c2c2c",
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)",
+        }}
+      >
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            htmlFor="username"
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "#ddd",
+            }}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            유저 닉네임
+          </label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="닉네임을 입력하세요"
+            style={{
+              width: "100%",
+              padding: "14px",
+              fontSize: "1rem",
+              border: "1px solid #444",
+              borderRadius: "8px",
+              backgroundColor: "#333",
+              color: "#fff",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            htmlFor="referralCode"
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "#ddd",
+            }}
+          >
+            추천 코드
+          </label>
+          <input
+            type="text"
+            id="referralCode"
+            value={referralCode}
+            onChange={(e) => setReferralCode(e.target.value)}
+            placeholder="추천 코드를 입력하세요"
+            style={{
+              width: "100%",
+              padding: "14px",
+              fontSize: "1rem",
+              border: "1px solid #444",
+              borderRadius: "8px",
+              backgroundColor: "#333",
+              color: "#fff",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        </div>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "14px",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            backgroundColor: "#0070f3",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          코인 받기 🪙🪙🪙🪙🪙
+        </button>
+      </form>
     </div>
   );
 }

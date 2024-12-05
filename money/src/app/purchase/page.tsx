@@ -4,11 +4,15 @@ import React, { useState, useRef, useEffect } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { useSearchParams } from "next/navigation";
 
 const Purchase: NextPage = () => {
   const [position, setPosition] = useState({ x: 0, y: 673 }); // 초기 위치
   const [smooth, setSmooth] = useState(false); // transition 활성화 여부
   const dragRef = useRef(false);
+  const searchParams = useSearchParams();
+  const username = searchParams.get("username");
+  
 
   useEffect(() => {
     // purchase1Child의 위치 계산
@@ -83,6 +87,12 @@ const Purchase: NextPage = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleDragEnd}
     >
+      {/* 환영 메시지 추가 */}
+      <div className={styles.welcomeMessage}>
+        <h1>환영합니다, {username}님!</h1>
+        <p>구매를 시작하세요.</p>
+      </div>
+  
       <div className={styles.coinParent}>
         <Image
           className={styles.coinIcon}
@@ -120,6 +130,7 @@ const Purchase: NextPage = () => {
           src="/coin.png"
         />
       </div>
+  
       <Image
         className={styles.white_carIcon}
         width={320}
@@ -140,6 +151,13 @@ const Purchase: NextPage = () => {
       </div>
     </div>
   );
-};
+  
 
-export default Purchase;
+
+
+
+  };
+  
+  export default Purchase;
+    
+   
