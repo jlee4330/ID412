@@ -1,33 +1,39 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
-const Purchase: NextPage = () => {
+const Purchase = () => {
   const [position, setPosition] = useState({ x: 0, y: 673 }); // 초기 위치
   const [smooth, setSmooth] = useState(false); // transition 활성화 여부
   const dragRef = useRef(false);
   const searchParams = useSearchParams();
-  const username = searchParams.get("username");
-  
+  const router = useRouter(); // 라우터 사용
+  const username = decodeURIComponent(searchParams.get("username") || ""); // username 디코딩
+  const selectedItem = decodeURIComponent(
+    searchParams.get("selectedItem") || "default"
+  );
+  const coin = parseInt(searchParams.get("coins") || "0", 10);
 
   useEffect(() => {
-    // purchase1Child의 위치 계산
     const parent = document.querySelector(`.${styles.purchase1Child}`);
     if (!parent) return;
 
     const parentRect = parent.getBoundingClientRect();
-    const startX = parentRect.left; // 좌측 끝
-
-    setPosition({ x: startX, y: 673 }); // 초기 위치 설정
+    setPosition({ x: parentRect.left, y: 673 }); // 초기 위치 설정
   }, []);
+
+  const handleGoBack = () => {
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    query.delete("selectedItem");
+    router.push(`/secretCode?${query.toString()}`);
+  };
 
   const handleDragStart = () => {
     dragRef.current = true;
-    setSmooth(false); // 드래그 중에는 transition 비활성화
+    setSmooth(false);
   };
 
   const handleDragMove = (clientX: number, clientY: number) => {
@@ -38,11 +44,8 @@ const Purchase: NextPage = () => {
 
     const parentRect = parent.getBoundingClientRect();
     const dragX = clientX - parentRect.left;
-    const dragY = clientY - parentRect.top;
 
-    const newX = Math.max(0, Math.min(dragX - 40, parentRect.width - 80)); // 40은 offset
-    const newY = Math.max(0, Math.min(dragY, parentRect.height - 60));
-
+    const newX = Math.max(0, Math.min(dragX - 40, parentRect.width - 80));
     setPosition({ x: newX + parentRect.left, y: 673 });
   };
 
@@ -53,19 +56,29 @@ const Purchase: NextPage = () => {
     if (!parent) return;
 
     const parentRect = parent.getBoundingClientRect();
-    const rectangleCenterX = position.x + 40; // rectangleParent의 중심 X 좌표
-    const parentCenterX = parentRect.left + parentRect.width / 2;
+    const rectangleEndX = position.x + 80; // rectangleParent 오른쪽 끝
+    const parentEndX = parentRect.left + parentRect.width;
 
-    setSmooth(true); // transition 활성화
+    setSmooth(true);
 
-    // 좌측 또는 우측으로 이동 결정
-    if (rectangleCenterX < parentCenterX) {
-      setPosition({ x: parentRect.left, y: 673 }); // 좌측 끝
+    // 오른쪽 끝에 위치한 경우
+    if (rectangleEndX >= parentEndX) {
+      alert("Purchase Succeeded!");
+
+      const query = new URLSearchParams(Array.from(searchParams.entries()));
+      const purchasedItems = JSON.parse(query.get("purchasedItems") || "[]");
+
+      query.set("coins", Math.max(0, coin - 1).toString()); // Decrement coins
+      query.set(
+        "purchasedItems",
+        JSON.stringify([...purchasedItems, selectedItem])
+      ); // Add selectedItem
+      query.delete("selectedItem"); // Remove selectedItem
+
+      router.push(`/secretCode?${query.toString()}`);
     } else {
-      setPosition({
-        x: parentRect.left + parentRect.width - 80, // 우측 끝
-        y: 673,
-      });
+      // 초기 위치로 복귀
+      setPosition({ x: parentRect.left, y: 673 });
     }
   };
 
@@ -78,6 +91,37 @@ const Purchase: NextPage = () => {
     handleDragMove(touch.clientX, touch.clientY);
   };
 
+  const renderCartIcons = () => {
+    const totalIcons = 5;
+    const icons = [];
+    for (let i = 0; i < totalIcons; i++) {
+      icons.push(
+        <Image
+          key={i}
+          className={styles.cartIcon}
+          width={32}
+          height={32}
+          alt=""
+          src={i < coin ? "/cartEmpty.png" : "/cartFull.png"}
+        />
+      );
+    }
+    return icons;
+  };
+
+  const itemImageSrc = (() => {
+    switch (selectedItem) {
+      case "ramen":
+        return "/ramen.png";
+      case "sushi":
+        return "/sushi.png";
+      case "pizza":
+        return "/pizza.png";
+      default:
+        return "/default.png";
+    }
+  })();
+
   return (
     <div
       className={styles.purchase1}
@@ -87,57 +131,35 @@ const Purchase: NextPage = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleDragEnd}
     >
-      {/* 환영 메시지 추가 */}
+      {/* 뒤로가기 버튼 */}
+      <div className={styles.goBackButton} onClick={handleGoBack}>
+        <Image
+          src="/goBack.png"
+          alt="Go back"
+          width={32}
+          height={32}
+          className={styles.goBackIcon}
+        />
+      </div>
+
+      {/* 환영 메시지 */}
       <div className={styles.welcomeMessage}>
-        <h1>환영합니다, {username}님!</h1>
-        <p>구매를 시작하세요.</p>
+        <h1>Welcome, {username}!</h1>
+        <p>Would you like to purchase this item?</p>
       </div>
-  
-      <div className={styles.coinParent}>
-        <Image
-          className={styles.coinIcon}
-          width={32}
-          height={32}
-          alt=""
-          src="/coin.png"
-        />
-        <Image
-          className={styles.coinIcon}
-          width={32}
-          height={32}
-          alt=""
-          src="/coin.png"
-        />
-        <Image
-          className={styles.coinIcon}
-          width={32}
-          height={32}
-          alt=""
-          src="/coin.png"
-        />
-        <Image
-          className={styles.coinIcon}
-          width={32}
-          height={32}
-          alt=""
-          src="/coin.png"
-        />
-        <Image
-          className={styles.coinIcon}
-          width={32}
-          height={32}
-          alt=""
-          src="/coin.png"
-        />
-      </div>
-  
+
+      {/* cartIcons 렌더링 */}
+      <div className={styles.cartParent}>{renderCartIcons()}</div>
+
+      {/* selectedItem 이미지 */}
       <Image
-        className={styles.white_carIcon}
+        className={styles.itemsIcon}
         width={320}
         height={320}
-        alt=""
-        src="/white_car.png"
+        alt={selectedItem}
+        src={itemImageSrc}
       />
+
       <div className={styles.purchase1Child} />
       <div className={styles.swipeToPurchase}>{`>> Swipe to Purchase`}</div>
       <div
@@ -151,13 +173,6 @@ const Purchase: NextPage = () => {
       </div>
     </div>
   );
-  
+};
 
-
-
-
-  };
-  
-  export default Purchase;
-    
-   
+export default Purchase;

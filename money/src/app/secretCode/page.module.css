@@ -1,0 +1,96 @@
+.cartIcon {
+  width: 32px;
+  position: relative;
+  height: 32px;
+  object-fit: cover;
+}
+
+.cartParent {
+  position: absolute;
+  top: 74px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.purchase1 {
+  width: 100%;
+  position: relative;
+  background-color: #000;
+  height: 852px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 17px;
+  color: #fff;
+  font-family: "SF Pro";
+}
+
+.welcomeMessage {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 350px;
+  word-wrap: break-word;
+}
+
+.welcomeMessage h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 8px; /* 하단 간격 추가 */
+}
+
+.welcomeMessage p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.inputBox {
+  width: 70%;
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.inputBox:focus {
+  border-color: #0070f3;
+}
+.primaryButton {
+  width: 70%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 470px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.primaryButton:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #005bb5;
+}

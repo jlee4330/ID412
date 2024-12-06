@@ -1,10 +1,10 @@
-.coinIcon {
+.cartIcon {
   width: 32px;
   position: relative;
   height: 32px;
   object-fit: cover;
 }
-.coinParent {
+.cartParent {
   position: absolute;
   top: 74px;
   right: 20px;
@@ -14,7 +14,7 @@
   justify-content: flex-start;
   gap: 8px;
 }
-.white_carIcon {
+.itemsIcon {
   position: absolute;
   top: 255px;
   left: calc(50% - 159.5px);
@@ -72,6 +72,26 @@
   cursor: grabbing;
 }
 
+.welcomeMessage {
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 350px;
+  word-wrap: break-word;
+}
+
+.welcomeMessage h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 8px; /* 하단 간격 추가 */
+}
+
+.welcomeMessage p {
+  font-size: 14px;
+  margin: 0;
+}
 .purchase1 {
   width: 100%;
   position: relative;
@@ -82,4 +102,19 @@
   font-size: 17px;
   color: #fff;
   font-family: "SF Pro";
+}
+
+.goBackButton {
+  position: absolute;
+  top: 74px; /* 상단 여백 */
+  left: 30px; /* 왼쪽 여백 */
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.goBackIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

@@ -5,17 +5,43 @@ import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [referralCode, setReferralCode] = useState("");
+  const [username, setUsername] = useState<string>(""); // 타입 명시
+  const [referralCode, setReferralCode] = useState<string>(""); // 타입 명시
+  const [errorMessage, setErrorMessage] = useState<string>(""); // 에러 메시지 상태
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // 페이지 리로드 방지
+
     if (username.trim() === "") {
-      alert("닉네임을 입력해주세요.");
+      setErrorMessage("Please enter your nickname."); // 에러 메시지 설정
       return;
     }
-    console.log("로그인 성공:", { username, referralCode });
-    router.push(`/purchase?username=${encodeURIComponent(username)}`);
+
+    if (username.trim().length < 2) {
+      setErrorMessage("The nickname must be at least 2 characters long."); // 닉네임 길이 검사
+      return;
+    }
+
+    setErrorMessage(""); // 에러 메시지 초기화
+
+    // 기본값 설정
+    const coins: number = 5; // 기본 코인 수
+    const products: string[] = []; // 빈 배열로 초기화, 타입 명시
+
+    // URL에 데이터 추가
+    const queryParams = new URLSearchParams({
+      username: encodeURIComponent(username),
+      coins: coins.toString(),
+      products: encodeURIComponent(JSON.stringify(products)), // 배열을 JSON 문자열로 변환
+    }).toString();
+
+    console.log("Login succeeded:", {
+      username,
+      referralCode,
+      coins,
+      products,
+    });
+    router.push(`/secretCode?${queryParams}`);
   };
 
   return (
@@ -34,7 +60,7 @@ export default function Home() {
         boxSizing: "border-box",
       }}
     >
-      <h1 style={{ fontSize: "1.8rem", marginBottom: "30px" }}>로그인</h1>
+      <h1 style={{ fontSize: "1.8rem", marginBottom: "30px" }}>Login</h1>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -57,19 +83,19 @@ export default function Home() {
               color: "#ddd",
             }}
           >
-            유저 닉네임
+            Nickname
           </label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="닉네임을 입력하세요"
+            placeholder="Enter your nickname"
             style={{
               width: "100%",
               padding: "14px",
               fontSize: "1rem",
-              border: "1px solid #444",
+              border: `1px solid ${errorMessage ? "#ff4d4d" : "#444"}`, // 에러 시 테두리 색 변경
               borderRadius: "8px",
               backgroundColor: "#333",
               color: "#fff",
@@ -77,6 +103,18 @@ export default function Home() {
               boxSizing: "border-box",
             }}
           />
+          {/* 에러 메시지 출력 */}
+          {errorMessage && (
+            <p
+              style={{
+                color: "#ff4d4d",
+                fontSize: "0.875rem",
+                marginTop: "8px",
+              }}
+            >
+              {errorMessage}
+            </p>
+          )}
         </div>
         <div style={{ marginBottom: "20px" }}>
           <label
@@ -89,14 +127,14 @@ export default function Home() {
               color: "#ddd",
             }}
           >
-            추천 코드
+            Referral Code
           </label>
           <input
             type="text"
             id="referralCode"
             value={referralCode}
             onChange={(e) => setReferralCode(e.target.value)}
-            placeholder="추천 코드를 입력하세요"
+            placeholder="Enter the referral code"
             style={{
               width: "100%",
               padding: "14px",
@@ -125,7 +163,7 @@ export default function Home() {
             boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
           }}
         >
-          코인 받기 🪙🪙🪙🪙🪙
+          🎁 Get Free Goods
         </button>
       </form>
     </div>
