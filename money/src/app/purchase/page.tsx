@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const Purchase = () => {
+const PurchaseContent = () => {
   const [position, setPosition] = useState({ x: 0, y: 673 }); // 초기 위치
   const [smooth, setSmooth] = useState(false); // transition 활성화 여부
   const dragRef = useRef(false);
@@ -36,7 +36,7 @@ const Purchase = () => {
     setSmooth(false);
   };
 
-  const handleDragMove = (clientX: number, clientY: number) => {
+  const handleDragMove = (clientX: number) => {
     if (!dragRef.current) return;
 
     const parent = document.querySelector(`.${styles.purchase1Child}`);
@@ -61,7 +61,6 @@ const Purchase = () => {
 
     setSmooth(true);
 
-    // 오른쪽 끝에 위치한 경우
     if (rectangleEndX >= parentEndX) {
       alert("Purchase Succeeded!");
 
@@ -77,18 +76,17 @@ const Purchase = () => {
 
       router.push(`/secretCode?${query.toString()}`);
     } else {
-      // 초기 위치로 복귀
       setPosition({ x: parentRect.left, y: 673 });
     }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    handleDragMove(e.clientX, e.clientY);
+    handleDragMove(e.clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     const touch = e.touches[0];
-    handleDragMove(touch.clientX, touch.clientY);
+    handleDragMove(touch.clientX);
   };
 
   const renderCartIcons = () => {
@@ -174,5 +172,11 @@ const Purchase = () => {
     </div>
   );
 };
+
+const Purchase = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <PurchaseContent />
+  </Suspense>
+);
 
 export default Purchase;
