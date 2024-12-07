@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const SecretCode: NextPage = () => {
+const SecretCodeContent: NextPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -84,5 +84,11 @@ const SecretCode: NextPage = () => {
     </div>
   );
 };
+
+const SecretCode: NextPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SecretCodeContent />
+  </Suspense>
+);
 
 export default SecretCode;
