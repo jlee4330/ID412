@@ -1,9 +1,13 @@
+/* Google Fonts에서 Roboto 폰트 로드 */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 .cartIcon {
   width: 32px;
   position: relative;
   height: 32px;
   object-fit: cover;
 }
+
 .cartParent {
   position: absolute;
   top: 74px;
@@ -14,6 +18,7 @@
   justify-content: flex-start;
   gap: 8px;
 }
+
 .itemsIcon {
   position: absolute;
   top: 255px;
@@ -22,6 +27,7 @@
   height: 320px;
   object-fit: cover;
 }
+
 .swipeToPurchase {
   position: absolute;
   top: 641px;
@@ -29,7 +35,9 @@
   font-size: 14px;
   line-height: 22px;
   font-weight: 100;
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
+
 .groupChild {
   position: absolute;
   top: 0px;
@@ -38,12 +46,15 @@
   width: 80px;
   height: 60px;
 }
+
 .b {
   position: absolute;
   top: 19px;
   left: 24px;
   line-height: 22px;
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
+
 .purchase1Child {
   position: absolute;
   top: 673px;
@@ -62,6 +73,7 @@
   font-size: 20px;
   z-index: 10;
   transition: none;
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .rectangleParent.smooth {
@@ -86,12 +98,15 @@
   font-size: 24px;
   font-weight: bold;
   margin: 0 0 8px; /* 하단 간격 추가 */
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .welcomeMessage p {
   font-size: 14px;
   margin: 0;
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
+
 .purchase1 {
   width: 100%;
   position: relative;
@@ -101,7 +116,7 @@
   text-align: center;
   font-size: 17px;
   color: #fff;
-  font-family: "SF Pro";
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .goBackButton {

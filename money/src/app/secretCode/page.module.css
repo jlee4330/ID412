@@ -1,3 +1,6 @@
+/* Google Fonts에서 Roboto 폰트 로드 */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 .cartIcon {
   width: 32px;
   position: relative;
@@ -25,12 +28,12 @@
   text-align: center;
   font-size: 17px;
   color: #fff;
-  font-family: "SF Pro";
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .welcomeMessage {
   position: absolute;
-  top: 250px;
+  top: 200px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -64,11 +67,13 @@
   top: 400px;
   left: 50%;
   transform: translateX(-50%);
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .inputBox:focus {
   border-color: #0070f3;
 }
+
 .primaryButton {
   width: 70%;
   padding: 14px;
@@ -84,6 +89,7 @@
   top: 470px;
   left: 50%;
   transform: translateX(-50%);
+  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .primaryButton:disabled {

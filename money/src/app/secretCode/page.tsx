@@ -42,6 +42,12 @@ const SecretCodeContent: NextPage = () => {
     return icons;
   };
 
+  const handleCartClick = () => {
+    // URL 정보를 유지하며 cart 페이지로 이동
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    router.push(`/cart?${query.toString()}`);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -80,7 +86,10 @@ const SecretCodeContent: NextPage = () => {
           🎁 Get free item
         </button>
       </form>
-      <div className={styles.cartParent}>{renderCartIcons()}</div>
+      {/* cartParent 클릭 시 cart 페이지로 이동 */}
+      <div className={styles.cartParent} onClick={handleCartClick}>
+        {renderCartIcons()}
+      </div>
     </div>
   );
 };
