@@ -23,7 +23,7 @@
   width: 100%;
   position: relative;
   background-color: #000;
-  height: 852px;
+  height: 100vh;
   overflow: hidden;
   text-align: center;
   font-size: 17px;
@@ -79,7 +79,7 @@
   padding: 14px;
   font-size: 1rem;
   font-weight: bold;
-  background-color: #0070f3;
+  background-color: #0070f3; /* 파란색 */
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -89,7 +89,6 @@
   top: 470px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
 }
 
 .primaryButton:disabled {
@@ -99,4 +98,9 @@
 
 .primaryButton:hover:not(:disabled) {
   background-color: #005bb5;
+}
+
+.receiveButton {
+  top: 470px;
+  background-color: #0070f3; /* Receive Items 버튼 색상 */
 }

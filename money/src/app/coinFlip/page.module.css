@@ -1,0 +1,43 @@
+.coinFlipPage {
+  position: relative;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+  text-align: center;
+}
+
+.welcomeMessage {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 80%;
+}
+
+.welcomeMessage h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.welcomeMessage p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.coinContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.coinImage {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}

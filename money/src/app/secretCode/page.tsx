@@ -43,23 +43,20 @@ const SecretCodeContent: NextPage = () => {
   };
 
   const handleCartClick = () => {
-    // URL 정보를 유지하며 cart 페이지로 이동
     const query = new URLSearchParams(Array.from(searchParams.entries()));
-    router.push(`/cart?${query.toString()}`);
+    router.push(`/cart?${query.toString()}`); // URL 정보를 유지하면서 cart 페이지로 이동
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (coin <= 0) {
-      // 코인이 0인 경우
       alert("You used all your chances!"); // 경고 메시지 표시
-      return; // 페이지 이동 방지
+      return;
     }
 
     const selectedItem = routeMap[code];
     if (selectedItem) {
-      // 기존 URL 정보 유지
       const query = new URLSearchParams(Array.from(searchParams.entries()));
       query.set("selectedItem", selectedItem); // selectedItem 추가
       router.push(`/purchase?${query.toString()}`);
@@ -68,24 +65,40 @@ const SecretCodeContent: NextPage = () => {
     }
   };
 
+  const handleReceiveItems = () => {
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    router.push(`/coinFlip?${query.toString()}`); // URL 정보를 유지하며 coinFlip 페이지로 이동
+  };
+
   return (
     <div className={styles.purchase1}>
       <div className={styles.welcomeMessage}>
         <h1>Welcome, {usernameFromUrl}!</h1>
-        <p>Enter Your Secret Code</p>
+        <p>{coin > 0 ? "Enter Your Secret Code" : "Receive Your Items"}</p>
       </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          className={styles.inputBox}
-          placeholder="Enter the code"
-        />
-        <button type="submit" className={styles.primaryButton}>
-          🎁 Get free item
+
+      {coin > 0 ? (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            className={styles.inputBox}
+            placeholder="Enter the code"
+          />
+          <button type="submit" className={styles.primaryButton}>
+            🎁 Get Free Item
+          </button>
+        </form>
+      ) : (
+        <button
+          onClick={handleReceiveItems}
+          className={`${styles.primaryButton} ${styles.receiveButton}`}
+        >
+          🎁 Receive Items
         </button>
-      </form>
+      )}
+
       {/* cartParent 클릭 시 cart 페이지로 이동 */}
       <div className={styles.cartParent} onClick={handleCartClick}>
         {renderCartIcons()}
