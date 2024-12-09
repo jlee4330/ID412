@@ -62,19 +62,27 @@ const PurchaseContent = () => {
     setSmooth(true);
 
     if (rectangleEndX >= parentEndX) {
-      alert("Purchase Succeeded!");
-
       const query = new URLSearchParams(Array.from(searchParams.entries()));
       const purchasedItems = JSON.parse(query.get("purchasedItems") || "[]");
 
-      query.set("coins", Math.max(0, coin - 1).toString()); // Decrement coins
-      query.set(
-        "purchasedItems",
-        JSON.stringify([...purchasedItems, selectedItem])
-      ); // Add selectedItem
-      query.delete("selectedItem"); // Remove selectedItem
+      if (purchasedItems.includes(selectedItem)) {
+        // 아이템이 이미 존재하는 경우
+        alert("Purchase Failed: This item exists in your shopping cart");
+        query.delete("selectedItem"); // selectedItem만 제거
+        router.push(`/secretCode?${query.toString()}`);
+      } else {
+        // 아이템 추가 및 coin 감소
+        alert("Purchase Succeeded!");
 
-      router.push(`/secretCode?${query.toString()}`);
+        query.set("coins", Math.max(0, coin - 1).toString()); // Decrement coins
+        query.set(
+          "purchasedItems",
+          JSON.stringify([...purchasedItems, selectedItem])
+        ); // Add selectedItem
+        query.delete("selectedItem"); // Remove selectedItem
+
+        router.push(`/secretCode?${query.toString()}`);
+      }
     } else {
       setPosition({ x: parentRect.left, y: 580 });
     }
@@ -110,6 +118,16 @@ const PurchaseContent = () => {
   const itemImageSrc = (() => {
     switch (selectedItem) {
       case "ramen":
+        return "/ramen.png";
+      case "ramena":
+        return "/ramen.png";
+      case "ramenb":
+        return "/ramen.png";
+      case "ramenc":
+        return "/ramen.png";
+      case "ramend":
+        return "/ramen.png";
+      case "ramene":
         return "/ramen.png";
       case "white_car":
         return "/white_car.png";
