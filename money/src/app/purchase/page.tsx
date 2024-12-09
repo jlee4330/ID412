@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const PurchaseContent = () => {
-  const [position, setPosition] = useState({ x: 0, y: 673 }); // 초기 위치
+  const [position, setPosition] = useState({ x: 0, y: 580 }); // 초기 위치
   const [smooth, setSmooth] = useState(false); // transition 활성화 여부
   const dragRef = useRef(false);
   const searchParams = useSearchParams();
@@ -22,7 +22,7 @@ const PurchaseContent = () => {
     if (!parent) return;
 
     const parentRect = parent.getBoundingClientRect();
-    setPosition({ x: parentRect.left, y: 673 }); // 초기 위치 설정
+    setPosition({ x: parentRect.left, y: 580 }); // 초기 위치 설정
   }, []);
 
   const handleGoBack = () => {
@@ -46,7 +46,7 @@ const PurchaseContent = () => {
     const dragX = clientX - parentRect.left;
 
     const newX = Math.max(0, Math.min(dragX - 40, parentRect.width - 80));
-    setPosition({ x: newX + parentRect.left, y: 673 });
+    setPosition({ x: newX + parentRect.left, y: 580 });
   };
 
   const handleDragEnd = () => {
@@ -111,8 +111,8 @@ const PurchaseContent = () => {
     switch (selectedItem) {
       case "ramen":
         return "/ramen.png";
-      case "sushi":
-        return "/sushi.png";
+      case "white_car":
+        return "/white_car.png";
       case "pizza":
         return "/pizza.png";
       default:

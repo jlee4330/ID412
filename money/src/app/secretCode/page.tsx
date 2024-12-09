@@ -20,7 +20,7 @@ const SecretCodeContent: NextPage = () => {
   // 코드별 selectedItem 데이터
   const routeMap: { [key: string]: string } = {
     ramen: "ramen",
-    b56hf: "sushi",
+    wtc123: "white_car",
     c78jk: "pizza",
   };
 

@@ -1,43 +1,70 @@
 .coinFlipPage {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #000;
   color: #fff;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   font-family: "Roboto", sans-serif;
-  overflow: hidden;
   text-align: center;
+  overflow: hidden;
 }
 
 .welcomeMessage {
   position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 10%;
   text-align: center;
   width: 80%;
-}
-
-.welcomeMessage h1 {
-  font-size: 24px;
+  color: #ffffff;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 8px;
 }
 
-.welcomeMessage p {
-  font-size: 16px;
-  margin: 0;
+.videoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
 }
 
-.coinContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.videoPlayer {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 12px;
 }
 
-.coinImage {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
+.playButton {
+  margin-top: 20px;
+  padding: 12px 30px;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(90deg, #ffd700, #ff8c00);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 4px 15px rgba(255, 140, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+}
+
+.playButton:hover {
+  background: linear-gradient(90deg, #ff8c00, #ffd700);
+  box-shadow: 0px 6px 20px rgba(255, 140, 0, 0.7);
+  transform: scale(1.1);
+}
+
+.playButton:active {
+  transform: scale(1);
+}
+
+.disabledButton {
+  background: #aaa;
+  box-shadow: none;
+  cursor: not-allowed;
 }
