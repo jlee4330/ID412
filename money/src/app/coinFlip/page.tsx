@@ -45,6 +45,10 @@ const CoinFlipContent = () => {
           src="/cointoss.mp4"
           className={styles.videoPlayer}
           onEnded={handleVideoEnd} // 비디오가 끝날 때 이벤트 처리
+          playsInline
+          style={{
+            objectFit: "cover",
+          }}
         />
         <button
           onClick={handlePlay}

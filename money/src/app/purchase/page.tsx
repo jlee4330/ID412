@@ -76,7 +76,7 @@ const PurchaseContent = () => {
 
       router.push(`/secretCode?${query.toString()}`);
     } else {
-      setPosition({ x: parentRect.left, y: 673 });
+      setPosition({ x: parentRect.left, y: 580 });
     }
   };
 
