@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./page.module.css";
 
-const Cart = () => {
+const CartContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -26,7 +26,7 @@ const Cart = () => {
         width={32}
         height={32}
         alt={`Cart Icon ${index + 1}`}
-        src={index < coin ? "/cartEmpty.png" : "/cartFull.png"} // 이미지 수정
+        src={index < coin ? "/cartEmpty.png" : "/cartFull.png"}
       />
     ));
   };
@@ -65,5 +65,11 @@ const Cart = () => {
     </div>
   );
 };
+
+const Cart = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <CartContent />
+  </Suspense>
+);
 
 export default Cart;

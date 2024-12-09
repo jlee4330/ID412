@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import styles from "./page.module.css";
 
-const CoinFlip = () => {
+const CoinFlipContent = () => {
   const searchParams = useSearchParams();
   const username = decodeURIComponent(searchParams.get("username") || ""); // URL에서 username 가져오기
 
@@ -30,5 +30,11 @@ const CoinFlip = () => {
     </div>
   );
 };
+
+const CoinFlip = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <CoinFlipContent />
+  </Suspense>
+);
 
 export default CoinFlip;
