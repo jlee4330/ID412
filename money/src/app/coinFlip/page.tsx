@@ -38,6 +38,13 @@ const CoinFlipContent = () => {
         <p>Flip coins to receive the items.</p>
       </div>
 
+      {/* 결과 이미지 */}
+      {resultImage && (
+        <div className={styles.resultContainer}>
+          <img src={resultImage} alt="Result" className={styles.resultImage} />
+        </div>
+      )}
+
       {/* 영상과 버튼 */}
       <div className={styles.videoContainer}>
         <video
@@ -52,19 +59,14 @@ const CoinFlipContent = () => {
         />
         <button
           onClick={handlePlay}
-          className={styles.playButton}
+          className={`${styles.playButton} ${
+            isButtonDisabled ? styles.disabledButton : ""
+          }`}
           disabled={isButtonDisabled} // 버튼 비활성화 상태 적용
         >
           {isPlaying ? "Tossing…" : "Toss a Coin to Win"}
         </button>
       </div>
-
-      {/* 결과 이미지 */}
-      {resultImage && (
-        <div className={styles.resultContainer}>
-          <img src={resultImage} alt="Result" className={styles.resultImage} />
-        </div>
-      )}
     </div>
   );
 };

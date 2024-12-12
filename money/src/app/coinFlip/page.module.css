@@ -9,7 +9,7 @@
   height: 100vh;
   font-family: "Roboto", sans-serif;
   text-align: center;
-  overflow: hidden;
+  overflow: hidden; /* 페이지에서 스크롤바 방지 */
 }
 
 .welcomeMessage {
@@ -22,6 +22,25 @@
   font-weight: bold;
 }
 
+.resultContainer {
+  position: absolute;
+  top: 25%; /* 비디오와 충돌하지 않도록 충분히 위로 올림 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 화면의 전체 너비 */
+  height: auto; /* 높이 자동 조정 */
+  z-index: 2; /* 비디오 위에 표시되도록 z-index 설정 */
+}
+
+.resultImage {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+}
+
 .videoContainer {
   display: flex;
   flex-direction: column;
@@ -30,6 +49,8 @@
   width: 100%;
   max-width: 600px;
   height: auto;
+  position: absolute;
+  bottom: 20%; /* 페이지 하단에 버튼 위치 고정 */
 }
 
 .videoPlayer {
