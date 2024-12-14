@@ -129,8 +129,8 @@
   bottom: 20px; /* 하단에서 여백 추가 */
   left: 50%; /* 수평 중앙 정렬 */
   transform: translateX(-50%); /* 수평 중앙 정렬 */
-  width: calc(100%); /* 화면 폭 기준 크기 조정 (양쪽에 20px 여백) */
-  max-width: 1179px; /* 최대 원본 크기 */
+  width: calc(100%);
+  max-width: 500px; /* 최대 원본 크기 */
   overflow: hidden;
   z-index: 10;
 }

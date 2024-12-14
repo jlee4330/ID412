@@ -16,6 +16,7 @@ const PurchaseContent = () => {
     searchParams.get("selectedItem") || "default"
   );
   const coin = parseInt(searchParams.get("coins") || "0", 10);
+  const audioRef = useRef<HTMLAudioElement | null>(null); // 오디오 참조
 
   useEffect(() => {
     const parent = document.querySelector(`.${styles.purchase1Child}`);
@@ -49,7 +50,7 @@ const PurchaseContent = () => {
     setPosition({ x: newX + parentRect.left, y: 580 });
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = async () => {
     dragRef.current = false;
 
     const parent = document.querySelector(`.${styles.purchase1Child}`);
@@ -68,20 +69,26 @@ const PurchaseContent = () => {
       if (purchasedItems.includes(selectedItem)) {
         // 아이템이 이미 존재하는 경우
         alert("Purchase Failed: This item exists in your shopping cart");
-        query.delete("selectedItem"); // selectedItem만 제거
+        query.delete("selectedItem");
         router.push(`/secretCode?${query.toString()}`);
       } else {
         // 아이템 추가 및 coin 감소
-        alert("Purchase Succeeded!");
-
-        query.set("coins", Math.max(0, coin - 1).toString()); // Decrement coins
+        query.set("coins", Math.max(0, coin - 1).toString());
         query.set(
           "purchasedItems",
           JSON.stringify([...purchasedItems, selectedItem])
-        ); // Add selectedItem
-        query.delete("selectedItem"); // Remove selectedItem
+        );
+        query.delete("selectedItem");
 
-        router.push(`/secretCode?${query.toString()}`);
+        // 사운드 재생 후 route
+        if (audioRef.current) {
+          audioRef.current.play(); // 사운드 재생
+          audioRef.current.onended = () => {
+            router.push(`/secretCode?${query.toString()}`);
+          };
+        } else {
+          router.push(`/secretCode?${query.toString()}`);
+        }
       }
     } else {
       setPosition({ x: parentRect.left, y: 580 });
@@ -118,21 +125,31 @@ const PurchaseContent = () => {
   const itemImageSrc = (() => {
     switch (selectedItem) {
       case "ramen":
-        return "/ramen.png";
-      case "ramena":
-        return "/ramen.png";
-      case "ramenb":
-        return "/ramen.png";
-      case "ramenc":
-        return "/ramen.png";
-      case "ramend":
-        return "/ramen.png";
-      case "ramene":
-        return "/ramen.png";
-      case "white_car":
-        return "/white_car.png";
-      case "pizza":
-        return "/pizza.png";
+        return "/ramen.gif";
+      case "monster_energy":
+        return "/monster_energy.gif";
+      case "traditional_rice_wine":
+        return "/traditional_rice_wine.gif";
+      case "movie_ticket":
+        return "/movie_ticket.gif";
+      case "burger":
+        return "/burger.gif";
+      case "keyboard":
+        return "/keyboard.gif";
+      case "lip_product":
+        return "/lip_product.gif";
+      case "logitech_lift_mouse":
+        return "/logitech_lift_mouse.gif";
+      case "sneakers":
+        return "/sneakers.gif";
+      case "nespresso":
+        return "/nespresso.gif";
+      case "airpods_max":
+        return "/airpods_max.gif";
+      case "sony_camera":
+        return "/sony_camera.gif";
+      case "cybertruck":
+        return "/cybertruck.gif";
       default:
         return "/default.png";
     }
@@ -147,6 +164,9 @@ const PurchaseContent = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleDragEnd}
     >
+      {/* 오디오 요소 */}
+      <audio ref={audioRef} src="/purchase.mp3" style={{ display: "none" }} />
+
       {/* 뒤로가기 버튼 */}
       <div className={styles.goBackButton} onClick={handleGoBack}>
         <Image
@@ -174,6 +194,7 @@ const PurchaseContent = () => {
         height={320}
         alt={selectedItem}
         src={itemImageSrc}
+        unoptimized
       />
 
       <div className={styles.purchase1Child} />

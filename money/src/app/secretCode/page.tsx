@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useRef } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -16,17 +16,23 @@ const SecretCodeContent: NextPage = () => {
   const coin = parseInt(searchParams.get("coins") || "0", 10); // coins 정보 가져오기 (기본값: 0)
 
   const [code, setCode] = useState(""); // 입력된 코드 상태
+  const audioRef = useRef<HTMLAudioElement | null>(null); // 오디오 ref
 
   // 코드별 selectedItem 데이터
   const routeMap: { [key: string]: string } = {
-    ramen: "ramen",
-    ramena: "ramena",
-    ramenb: "ramenb",
-    ramenc: "ramenc",
-    ramend: "ramend",
-    ramene: "ramene",
-    wtc123: "white_car",
-    c78jk: "pizza",
+    RAM123: "ramen",
+    MSTENR56: "monster_energy",
+    URLJU24: "traditional_rice_wine",
+    MOVT849: "movie_ticket",
+    BUR701: "burger",
+    KEYA19: "keyboard",
+    LIPCR84: "lip_product",
+    LOGLF74: "logitech_lift_mouse",
+    SHOe57: "sneakers",
+    NESPr3: "nespresso",
+    AIRpOd58: "airpods_max",
+    SONY$98: "sony_camera",
+    CYb$2teSla4: "cybertruck",
   };
 
   const renderCartIcons = () => {
@@ -52,7 +58,7 @@ const SecretCodeContent: NextPage = () => {
     router.push(`/cart?${query.toString()}`); // URL 정보를 유지하면서 cart 페이지로 이동
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (coin <= 0) {
@@ -62,9 +68,17 @@ const SecretCodeContent: NextPage = () => {
 
     const selectedItem = routeMap[code];
     if (selectedItem) {
-      const query = new URLSearchParams(Array.from(searchParams.entries()));
-      query.set("selectedItem", selectedItem); // selectedItem 추가
-      router.push(`/purchase?${query.toString()}`);
+      // 사운드 재생
+      if (audioRef.current) {
+        audioRef.current.play();
+      }
+
+      // 사운드가 끝난 뒤 route 처리
+      setTimeout(() => {
+        const query = new URLSearchParams(Array.from(searchParams.entries()));
+        query.set("selectedItem", selectedItem); // selectedItem 추가
+        router.push(`/purchase?${query.toString()}`);
+      }, 500); // 사운드 재생 시간 고려
     } else {
       alert("Invalid code. Please try again.");
     }
@@ -82,6 +96,9 @@ const SecretCodeContent: NextPage = () => {
 
   return (
     <div className={styles.purchase1}>
+      {/* 오디오 태그 추가 */}
+      <audio ref={audioRef} src="/code_okay.mp3" />
+
       <div className={styles.welcomeMessage}>
         <h1>Welcome, {usernameFromUrl}!</h1>
         <p>{coin > 0 ? "Enter Your Secret Code" : "Receive Your Items"}</p>
