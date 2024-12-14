@@ -62,6 +62,18 @@ const CartContent = () => {
           <p>No items in your cart.</p>
         )}
       </div>
+
+      {/* 하단 배너 광고 */}
+      <div className={styles.bannerContainer}>
+        <Image
+          src="/bannerAds.gif"
+          alt="Banner Advertisement"
+          layout="intrinsic"
+          width={1179}
+          height={578}
+          className={styles.bannerImage}
+        />
+      </div>
     </div>
   );
 };

@@ -75,6 +75,11 @@ const SecretCodeContent: NextPage = () => {
     router.push(`/coinFlip?${query.toString()}`); // URL 정보를 유지하며 coinFlip 페이지로 이동
   };
 
+  const handleNoMoreItemsClick = () => {
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    router.push(`/coinFlip?${query.toString()}`); // URL 정보를 유지하며 coinFlip 페이지로 이동
+  };
+
   return (
     <div className={styles.purchase1}>
       <div className={styles.welcomeMessage}>
@@ -94,6 +99,13 @@ const SecretCodeContent: NextPage = () => {
           <button type="submit" className={styles.primaryButton}>
             🎁 Get Free Item
           </button>
+          <button
+            type="button"
+            onClick={handleNoMoreItemsClick}
+            className={styles.textButton}
+          >
+            I don't need more items
+          </button>
         </form>
       ) : (
         <button
@@ -107,6 +119,18 @@ const SecretCodeContent: NextPage = () => {
       {/* cartParent 클릭 시 cart 페이지로 이동 */}
       <div className={styles.cartParent} onClick={handleCartClick}>
         {renderCartIcons()}
+      </div>
+
+      {/* 하단 배너 광고 */}
+      <div className={styles.bannerContainer}>
+        <Image
+          src="/bannerAds.gif"
+          alt="Banner Advertisement"
+          layout="intrinsic"
+          width={1179}
+          height={578}
+          className={styles.bannerImage}
+        />
       </div>
     </div>
   );

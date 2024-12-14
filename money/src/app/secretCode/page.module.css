@@ -33,7 +33,7 @@
 
 .welcomeMessage {
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -65,7 +65,7 @@
   box-sizing: border-box;
   margin-bottom: 20px;
   position: absolute;
-  top: 400px;
+  top: 300px;
   left: 50%;
   transform: translateX(-50%);
   font-family: "Roboto", sans-serif; /* Roboto 폰트 적용 */
@@ -87,7 +87,7 @@
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   position: absolute;
-  top: 470px;
+  top: 370px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -102,6 +102,41 @@
 }
 
 .receiveButton {
-  top: 470px;
+  top: 370px;
   background-color: #0070f3; /* Receive Items 버튼 색상 */
+}
+
+.textButton {
+  position: absolute;
+  top: 435px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.875rem; /* 작은 글씨 */
+  font-weight: 300; /* Light 폰트 */
+  color: #a7a7a7; /* 파란색 */
+  text-decoration: underline; /* 밑줄 추가 */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.textButton:hover {
+  color: #ffffff; /* hover 시 색상 변경 */
+}
+
+.bannerContainer {
+  position: fixed;
+  bottom: 20px; /* 하단에서 여백 추가 */
+  left: 50%; /* 수평 중앙 정렬 */
+  transform: translateX(-50%); /* 수평 중앙 정렬 */
+  width: calc(100%); /* 화면 폭 기준 크기 조정 (양쪽에 20px 여백) */
+  max-width: 1179px; /* 최대 원본 크기 */
+  overflow: hidden;
+  z-index: 10;
+}
+
+.bannerImage {
+  width: 100%;
+  height: auto; /* 비율 유지 */
+  object-fit: contain;
 }
