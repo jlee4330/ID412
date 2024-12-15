@@ -1,91 +1,119 @@
-.coinFlipPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #000;
+/* Disable scrolling on mobile/desktop */
+body {
+  overflow: hidden;
+  background-color: #000; /* Dark background for immersive game look */
   color: #fff;
-  width: 100%;
-  height: 100vh;
-  font-family: "Roboto", sans-serif;
-  text-align: center;
-  overflow: hidden; /* 페이지에서 스크롤바 방지 */
+  margin: 0;
 }
 
-.welcomeMessage {
-  position: absolute;
-  top: 10%;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full-screen height */
   text-align: center;
-  width: 80%;
-  color: #ffffff;
-  font-size: 20px;
+  gap: 20px;
+}
+
+.title h1 {
+  font-size: 32px;
+  margin: 0;
   font-weight: bold;
+  color: #ffffff; /* Gold color for the title */
+  text-shadow: 0px 0px 10px rgba(93, 91, 83, 0.8); /* Glow effect */
 }
 
-.resultContainer {
-  position: absolute;
-  top: 25%; /* 비디오와 충돌하지 않도록 충분히 위로 올림 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; /* 화면의 전체 너비 */
-  height: auto; /* 높이 자동 조정 */
-  z-index: 2; /* 비디오 위에 표시되도록 z-index 설정 */
-}
-
-.resultImage {
-  max-width: 150px;
-  max-height: 150px;
-  width: auto;
-  height: auto;
-  border-radius: 50%;
-}
-
-.videoContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  position: absolute;
-  bottom: 20%; /* 페이지 하단에 버튼 위치 고정 */
-}
-
-.videoPlayer {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 12px;
-}
-
-.playButton {
-  margin-top: 20px;
-  padding: 12px 30px;
+.title p {
   font-size: 18px;
-  color: #fff;
-  background: linear-gradient(90deg, #ffd700, #ff8c00);
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0px 4px 15px rgba(255, 140, 0, 0.5);
+  margin: 0;
+  color: #ffffff;
+}
+
+.wheelContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.pin {
+  position: absolute;
+  top: -10px; /* Keep the triangle at the top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 40px;
+  height: 40px;
+  background-color: #ff0000; /* Red selection pin */
+  clip-path: polygon(
+    50% 100%,
+    0% 0%,
+    100% 0%
+  ); /* Flip the triangle to point downward */
+  z-index: 10;
+  box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.8); /* Glow effect for pin */
+}
+
+.rouletteImageContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth spinning */
+}
+
+.rouletteImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* Glowing effect */
+}
+.spinButton {
+  padding: 15px 40px; /* Larger button for better emphasis */
+  font-size: 22px; /* Slightly bigger font for readability */
+  font-weight: bold;
+  color: #000; /* Black text for contrast */
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #e0e0e0
+  ); /* Subtle 3D gradient effect */
+  border: 2px solid #000; /* Black border for strong contrast */
+  border-radius: 50px; /* Rounded pill-shaped button */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Elevated shadow for depth */
 }
 
-.playButton:hover {
-  background: linear-gradient(90deg, #ff8c00, #ffd700);
-  box-shadow: 0px 6px 20px rgba(255, 140, 0, 0.7);
-  transform: scale(1.1);
+.spinButton:hover {
+  background: linear-gradient(
+    145deg,
+    #e0e0e0,
+    #ffffff
+  ); /* Reverse gradient on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover for interactivity */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* Increase shadow intensity on hover */
 }
 
-.playButton:active {
-  transform: scale(1);
+.spinButton:active {
+  transform: scale(0.95); /* Slight shrinkage on click for feedback */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Reduce shadow for pressed effect */
 }
 
 .disabledButton {
-  background: #aaa;
-  box-shadow: none;
-  cursor: not-allowed;
+  background: #d3d3d3; /* Light gray for disabled state */
+  color: #808080; /* Gray text for disabled state */
+  border: 2px solid #a9a9a9; /* Darker gray border */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+  box-shadow: none; /* No shadow for disabled state */
+  transform: none; /* No interaction effects for disabled state */
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff0000;
+  text-shadow: 0px 0px 10px rgba(255, 0, 0, 0.7); /* Glow effect for result */
 }

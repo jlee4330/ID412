@@ -1,80 +1,90 @@
 "use client";
 
-import React, { Suspense, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
-const CoinFlipContent = () => {
-  const searchParams = useSearchParams();
-  const username = decodeURIComponent(searchParams.get("username") || ""); // URL에서 username 가져오기
+const RouletteWheel = () => {
+  const [spinResult, setSpinResult] = useState<string | null>(null); // 결과 저장
+  const [isSpinning, setIsSpinning] = useState(false); // 스핀 상태 관리
+  const [remainingSpins, setRemainingSpins] = useState(5); // 남은 기회
+  const [rotation, setRotation] = useState(0); // 현재 회전각도 저장
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false); // 버튼 상태 관리
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // 버튼 비활성화 상태 관리
-  const [resultImage, setResultImage] = useState<string | null>(null); // 결과 이미지 상태 관리
+  const segments = [
+    "TRY AGAIN", // 실패
+    "TRY AGAIN", // 실패
+    "TRY AGAIN", // 실패
+    "TRY AGAIN", // 실패
+    "TRY AGAIN", // 실패
+    "TRY AGAIN", // 실패
+  ];
 
-  const handlePlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play(); // 비디오 재생
-      setIsPlaying(true); // 재생 상태 업데이트
-      setIsButtonDisabled(true); // 버튼 비활성화
-      setResultImage(null); // 이전 결과 이미지 초기화
-    }
-  };
+  useEffect(() => {
+    // Disable scrolling globally
+    document.body.style.overflow = "hidden";
+    return () => {
+      // Re-enable scrolling when the component is unmounted
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
-  const handleVideoEnd = () => {
-    setIsPlaying(false); // 재생 상태 초기화
-    setIsButtonDisabled(false); // 버튼 다시 활성화
-    // 50% 확률로 이미지 선택
-    const randomImage = Math.random() < 0.5 ? "/heads.png" : "/tails.png";
-    setResultImage(randomImage); // 선택된 이미지 상태 업데이트
+  const spinWheel = () => {
+    if (isSpinning || remainingSpins === 0) return;
+
+    setIsSpinning(true);
+    setSpinResult(null);
+
+    const randomIndex = Math.floor(Math.random() * segments.length);
+    const additionalRotation = 360 * 5 + randomIndex * (360 / segments.length); // 여러 바퀴 회전 후 멈춤
+    const newRotation = rotation + additionalRotation;
+
+    setRotation(newRotation);
+
+    setTimeout(() => {
+      setSpinResult(segments[randomIndex]);
+      setIsSpinning(false);
+      setRemainingSpins((prev) => prev - 1);
+    }, 5000);
   };
 
   return (
-    <div className={styles.coinFlipPage}>
-      {/* 상단 텍스트 */}
-      <div className={styles.welcomeMessage}>
-        <h1>Welcome, {username}!</h1>
-        <p>Flip coins to receive the items.</p>
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <h1>🎡 Spin the Wheel!</h1>
+        <p>Remaining Spins: {remainingSpins}</p>
       </div>
 
-      {/* 결과 이미지 */}
-      {resultImage && (
-        <div className={styles.resultContainer}>
-          <img src={resultImage} alt="Result" className={styles.resultImage} />
-        </div>
-      )}
+      <div className={styles.wheelContainer}>
+        <div className={styles.pin}></div>
 
-      {/* 영상과 버튼 */}
-      <div className={styles.videoContainer}>
-        <video
-          ref={videoRef}
-          src="/cointoss.mp4"
-          className={styles.videoPlayer}
-          onEnded={handleVideoEnd} // 비디오가 끝날 때 이벤트 처리
-          playsInline
-          style={{
-            objectFit: "cover",
-          }}
-        />
-        <button
-          onClick={handlePlay}
-          className={`${styles.playButton} ${
-            isButtonDisabled ? styles.disabledButton : ""
-          }`}
-          disabled={isButtonDisabled} // 버튼 비활성화 상태 적용
+        <div
+          className={styles.rouletteImageContainer}
+          style={{ transform: `rotate(${rotation}deg)` }}
         >
-          {isPlaying ? "Tossing…" : "Toss a Coin to Win"}
-        </button>
+          <img
+            src="/r.png" // Your image in the public folder
+            alt="Roulette Wheel"
+            className={styles.rouletteImage}
+          />
+        </div>
       </div>
+
+      <button
+        onClick={spinWheel}
+        className={`${styles.spinButton} ${
+          isSpinning || remainingSpins === 0 ? styles.disabledButton : ""
+        }`}
+        disabled={isSpinning || remainingSpins === 0}
+      >
+        {isSpinning
+          ? "Spinning…"
+          : remainingSpins > 0
+          ? "SPIN"
+          : "No Spins Left"}
+      </button>
+
+      {spinResult && <div className={styles.result}>Result: {spinResult}</div>}
     </div>
   );
 };
 
-const CoinFlip = () => (
-  <Suspense fallback={<div>Loading…</div>}>
-    <CoinFlipContent />
-  </Suspense>
-);
-
-export default CoinFlip;
+export default RouletteWheel;
