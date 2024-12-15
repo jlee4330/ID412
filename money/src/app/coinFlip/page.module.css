@@ -2,7 +2,7 @@
 .body {
   overflow: hidden;
   background-color: #000; /* Dark background for immersive game look */
-  color: #fff;
+  color: #000;
   margin: 0;
 }
 
