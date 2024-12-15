@@ -138,8 +138,6 @@ const PurchaseContent = () => {
         return "/keyboard.gif";
       case "lip_product":
         return "/lip_product.gif";
-      case "logitech_lift_mouse":
-        return "/logitech_lift_mouse.gif";
       case "sneakers":
         return "/sneakers.gif";
       case "nespresso":

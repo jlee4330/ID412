@@ -27,7 +27,6 @@ const SecretCodeContent: NextPage = () => {
     BUR701: "burger",
     KEYA19: "keyboard",
     LIPCR84: "lip_product",
-    LOGLF74: "logitech_lift_mouse",
     SHOe57: "sneakers",
     NESPr3: "nespresso",
     AIRpOd58: "airpods_max",

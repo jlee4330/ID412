@@ -111,7 +111,7 @@
 .purchase1 {
   width: 100%;
   position: relative;
-  background-color: #000000;
+  background-color: #191919;
   min-height: calc(100vh + 50px); /* 뷰포트 높이에 50px 추가 */
   padding-bottom: 50px; /* 하단 여유 공간 추가 */
   display: flex; /* 플렉스 컨테이너 사용 */
