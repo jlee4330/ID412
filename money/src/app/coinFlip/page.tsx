@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./page.module.css";
 
 const RouletteWheel = () => {
@@ -8,21 +8,15 @@ const RouletteWheel = () => {
   const [isSpinning, setIsSpinning] = useState(false); // 스핀 상태 관리
   const [remainingSpins, setRemainingSpins] = useState(5); // 남은 기회
   const [rotation, setRotation] = useState(0); // 현재 회전각도 저장
+  const wheelRef = useRef<HTMLDivElement | null>(null);
 
-  const segments = [
-    "TRY AGAIN", // 실패
-    "TRY AGAIN", // 실패
-    "TRY AGAIN", // 실패
-    "TRY AGAIN", // 실패
-    "TRY AGAIN", // 실패
-    "TRY AGAIN", // 실패
-  ];
+  // 사운드 ref
+  const spinAudioRef = useRef<HTMLAudioElement | null>(null); // 스핀 사운드
+  const resultAudioRef = useRef<HTMLAudioElement | null>(null); // 결과 사운드
 
   useEffect(() => {
-    // Disable scrolling globally
     document.body.style.overflow = "hidden";
     return () => {
-      // Re-enable scrolling when the component is unmounted
       document.body.style.overflow = "auto";
     };
   }, []);
@@ -33,23 +27,76 @@ const RouletteWheel = () => {
     setIsSpinning(true);
     setSpinResult(null);
 
-    const randomIndex = Math.floor(Math.random() * segments.length);
-    const additionalRotation = 360 * 5 + randomIndex * (360 / segments.length); // 여러 바퀴 회전 후 멈춤
-    const newRotation = rotation + additionalRotation;
+    // 사운드 재생 (스핀 시작 사운드)
+    if (spinAudioRef.current) {
+      try {
+        spinAudioRef.current.currentTime = 0;
+        spinAudioRef.current.play();
+      } catch (error) {
+        console.error("Spin audio playback error:", error);
+      }
+    }
 
-    setRotation(newRotation);
+    const minAngle = 30;
+    const maxAngle = 330;
+    const randomAngle = Math.random() * (maxAngle - minAngle) + minAngle;
+
+    const extraRotations = 5; // 5바퀴 회전
+    const totalRotation = extraRotations * 360 + randomAngle;
+
+    // 1단계: transition 제거, rotation을 0으로 초기화
+    if (wheelRef.current) {
+      wheelRef.current.style.transition = "none";
+      setRotation(0);
+    }
+
+    // 2단계: 다음 frame에서 transition 복구 후 회전 적용
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (wheelRef.current) {
+          wheelRef.current.style.transition = "transform 5s ease-out";
+          setRotation(totalRotation);
+        }
+      });
+    });
 
     setTimeout(() => {
-      setSpinResult(segments[randomIndex]);
+      // 항상 TRY AGAIN 결과
+      setSpinResult("TRY AGAIN");
       setIsSpinning(false);
       setRemainingSpins((prev) => prev - 1);
-    }, 5000);
+
+      // 결과 사운드 재생 (TRY AGAIN 시)
+      if (resultAudioRef.current) {
+        try {
+          resultAudioRef.current.currentTime = 0;
+          resultAudioRef.current.play();
+        } catch (error) {
+          console.error("Result audio playback error:", error);
+        }
+      }
+    }, 5000); // 애니메이션 시간과 동일
   };
 
   return (
     <div className={styles.container}>
+      {/* Spin 사운드 */}
+      <audio
+        ref={spinAudioRef}
+        src="/rrsound.mp3"
+        preload="auto"
+        style={{ display: "none" }}
+      />
+      {/* Result 사운드 */}
+      <audio
+        ref={resultAudioRef}
+        src="/ExplosionSound.mp3"
+        preload="auto"
+        style={{ display: "none" }}
+      />
+
       <div className={styles.title}>
-        <h1>🎡 Spin the Wheel!</h1>
+        <h1>🎡 Win Your Item!</h1>
         <p>Remaining Spins: {remainingSpins}</p>
       </div>
 
@@ -58,10 +105,11 @@ const RouletteWheel = () => {
 
         <div
           className={styles.rouletteImageContainer}
+          ref={wheelRef}
           style={{ transform: `rotate(${rotation}deg)` }}
         >
           <img
-            src="/r.png" // Your image in the public folder
+            src="/r.png" // 룰렛 이미지
             alt="Roulette Wheel"
             className={styles.rouletteImage}
           />
