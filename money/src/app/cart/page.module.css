@@ -72,7 +72,7 @@
 
 .bannerContainer {
   position: fixed;
-  bottom: 20px; /* 하단 여백 */
+  top: 470px;
   left: 50%; /* 수평 중앙 정렬 */
   transform: translateX(-50%);
   width: calc(100%);
