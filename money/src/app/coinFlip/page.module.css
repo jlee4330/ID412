@@ -9,6 +9,7 @@
 }
 
 .container {
+  background-color: #000000 !important; /* Force dark background */
   display: flex;
   flex-direction: column;
   align-items: center;
