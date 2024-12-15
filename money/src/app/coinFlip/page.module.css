@@ -1,9 +1,11 @@
 /* Disable scrolling on mobile/desktop */
 .body {
   overflow: hidden;
-  background-color: #000; /* Dark background for immersive game look */
-  color: #000;
+  background-color: #000000 !important; /* Force dark background */
+  color: #000000;
   margin: 0;
+  height: 100vh; /* Ensure full height for the background */
+  width: 100vw; /* Ensure full width for the background */
 }
 
 .container {
