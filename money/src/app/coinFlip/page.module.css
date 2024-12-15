@@ -1,5 +1,5 @@
 /* Disable scrolling on mobile/desktop */
-body {
+.body {
   overflow: hidden;
   background-color: #000; /* Dark background for immersive game look */
   color: #fff;
