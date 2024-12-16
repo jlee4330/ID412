@@ -25,7 +25,7 @@ export default function Home() {
     setErrorMessage(""); // 에러 메시지 초기화
 
     // 기본값 설정
-    const coins: number = 5; // 기본 코인 수
+    const coins: number = 4; // 기본 코인 수
     const products: string[] = []; // 빈 배열로 초기화, 타입 명시
 
     // URL에 데이터 추가

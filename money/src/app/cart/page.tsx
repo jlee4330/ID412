@@ -18,7 +18,7 @@ const CartContent = () => {
   };
 
   const renderCartIcons = () => {
-    const totalIcons = 5;
+    const totalIcons = 4;
     return Array.from({ length: totalIcons }).map((_, index) => (
       <Image
         key={index}

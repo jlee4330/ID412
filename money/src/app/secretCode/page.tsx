@@ -35,7 +35,7 @@ const SecretCodeContent: NextPage = () => {
   };
 
   const renderCartIcons = () => {
-    const totalIcons = 5;
+    const totalIcons = 4;
     const icons = [];
     for (let i = 0; i < totalIcons; i++) {
       icons.push(
